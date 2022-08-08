@@ -12,9 +12,21 @@ router.get(
   viewController.getOverview
 );
 router.get('/tour/:slug', authController.isLoggedIn, viewController.getTour);
+router.get('/signup', authController.isLoggedIn, viewController.getSignupForm);
 router.get('/login', authController.isLoggedIn, viewController.getLoginForm);
-router.get('/me', authController.protect, viewController.getAccount);
+router.get('/me', authController.protect, viewController.getAccountMain);
 router.get('/my-tours', authController.protect, viewController.getMyTours);
+router.get(
+  '/advanced-auth',
+  authController.protect,
+  viewController.getAccountAuth
+);
+
+router.get(
+  '/receive-confirm-signup/:token',
+  authController.protect,
+  viewController.getConfirmSignup
+);
 
 router.get(
   '/forgot-password',

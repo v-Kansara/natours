@@ -19,9 +19,13 @@ const loginForm = document.querySelector('.form--login');
 if (loginForm)
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    document.querySelector('.btn--login').textContent = 'Logging In ...';
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     login(email, password);
+
+    document.querySelector('.btn--login').textContent = 'Login';
   });
 
 // Login function

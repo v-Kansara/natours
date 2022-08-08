@@ -1,8 +1,11 @@
 extends base
 
 block content
-  main.main
-    .error
-      .error__title
-        h1.heading-secondary.heading-secondary--signup Welcome To Natours!    
-      .error__msg Your account has been verified! Please login to access your account.
+    main.main
+        .login-form
+            h2.heading-secondary.ma-bt-lg Account Verified!
+            form.form.form--confirm-signup
+                .form__group
+                    label.form__label(for='verified') Your account has been verified! Click on the button below to go back to your account page.
+                .form__group
+                    button.btn.btn--green.btn--back-account Back To Account

@@ -31,9 +31,9 @@ if (passwordResetForm)
     document.getElementById('password-confirm').value = '';
   });
 
+// Reset Password Function
 const resetPassword = async (data) => {
   try {
-    const protocol = window.location.protocol;
     const windowUrl = window.location.pathname.split('/');
     const token = windowUrl[2];
     const res = await axios({

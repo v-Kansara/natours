@@ -4,9 +4,9 @@ block content
     main.main
         .login-form
             h2.heading-secondary.ma-bt-lg Create Your Account!
-            form.form.form--login
+            form.form.form--signup
                 .form__group
-                    label.form__label(for='name') Email address
+                    label.form__label(for='name') Name
                     input#name.form__input(type='name', placeholder='Your Name', required)
                 .form__group
                     label.form__label(for='email') Email address
@@ -18,4 +18,9 @@ block content
                     label.form__label(for='password-confirm') Confirm Password
                     input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
                 .form__group
-                    button.btn.btn--green Sign Up
+                    button.btn.btn--green.btn--signup Sign Up
+
+                //- .form__group.ma-bt-md
+                    label.form__label(for='accept') 
+                        input#accept(type='checkbox')
+                        |   Accept terms and conditions

@@ -13,10 +13,6 @@ const showAlert = (type, msg) => {
   window.setTimeout(hideAlert, 5000);
 };
 
-const stripe = Stripe(
-  'pk_test_51GuOxbBQlQlKXql651C3zQMXbSsWD1YDFtB09t2gmj6bK5dv0D7vcelDCS14R5ovC4eGvTS0XBIj9llWZUxalVeQ009VOuuaQc'
-);
-
 const bookTour = async (tourId) => {
   try {
     // 1) Get checkout session from API
@@ -34,6 +30,10 @@ const bookTour = async (tourId) => {
     showAlert('error', err);
   }
 };
+
+const stripe = Stripe(
+  'pk_test_51GuOxbBQlQlKXql651C3zQMXbSsWD1YDFtB09t2gmj6bK5dv0D7vcelDCS14R5ovC4eGvTS0XBIj9llWZUxalVeQ009VOuuaQc'
+);
 
 // Checkout session trigger
 const bookBtn = document.getElementById('book-tour');

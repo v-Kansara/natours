@@ -5,7 +5,13 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 
 router.post('/signup', authController.signup);
-router.patch('/signup/:token', authController.confirmSignup);
+
+router.post('/confirmSignup', authController.confirmSignup);
+router.patch(
+  '/receiveConfirmSignup/:token',
+  authController.receiveConfirmSignup
+);
+
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 

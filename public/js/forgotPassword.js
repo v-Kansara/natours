@@ -30,7 +30,7 @@ if (forgotPasswordForm)
     document.getElementById('email').value = '';
   });
 
-// Forgot Password function
+// Forgot Password Function
 const forgotPassword = async (email) => {
   try {
     const res = await axios({

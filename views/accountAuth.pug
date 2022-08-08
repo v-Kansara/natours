@@ -1,0 +1,73 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+    li(class=`${active ? 'side-nav--active' : ''}`)
+        a(href=`${link}`)
+            svg
+                use(xlink:href=`img/icons.svg#icon-${icon}`)
+            | #{text}
+
+block content 
+    main.main
+        .user-view
+            nav.user-view__menu
+                ul.side-nav
+                    +navItem('/me', 'Settings', 'settings')
+                    +navItem('/my-tours', 'My Bookings', 'briefcase')
+                    +navItem('#', 'My Reviews', 'star')
+                    +navItem('#', 'My Favorites', 'heart')
+                    +navItem('#', 'Billing', 'credit-card')
+                    +navItem('#', 'Authorization', 'lock', true)
+
+                - if (user.role === 'admin')
+                    .admin-nav
+                        h5.admin-nav__heading Admin
+                        ul.side-nav
+                            +navItem('#', 'Manage Tours', 'map')
+                            +navItem('#', 'Manage Users', 'users')
+                            +navItem('#', 'Manage Reviews', 'star')
+                            +navItem('#', 'Manage Bookings', 'briefcase')
+
+                - if (user.role === 'lead-guide')
+                    .admin-nav
+                        h5.admin-nav__heading Lead-Guide
+                        ul.side-nav
+                            +navItem('#', 'Upcoming Tours', 'map')
+                            +navItem('#', 'Contact Guides', 'users')
+                
+                - if (user.role === 'guide')
+                    .admin-nav
+                        h5.admin-nav__heading Guide
+                        ul.side-nav
+                            +navItem('#', 'Upcoming Tours', 'map')          
+          
+            .user-view__content
+                .user-view__form-container
+                    h2.heading-secondary.ma-bt-md Confirm Email
+
+                    //- WITH API
+                    form.form.form--confirm-email
+                    - if (user.validated = false)
+                        .form__group
+                            label.form__label(for='email') Put your email in the box below
+                            input#confirm-email.form__input(type='email', placeholder='you@example.com', required)
+                        .form__group.right
+                            button.btn.btn--green.btn--confirm-email Send Confirmation Email
+                    - if (user.validated = true) 
+                        .form__group 
+                            label.form__label(for='email') Your email has already been validated!
+                            input#confirm-email.form__input(type='email', value=`${user.email}`)
+
+                .line &nbsp;
+
+                .user-view__form-container
+                    h2.heading-secondary.ma-bt-md 2-Factor-Authentication
+                    form.form.form-user-password
+                        .form__group
+                            label.form__label(for='phone-number-d') Domestic Phone Number
+                            input#phone-number-d.form__input(type='phone-number', placeholder=`415-555-0132`, required)
+                        .form__group
+                            label.form__label(for='phone-number-i') International Phone Number
+                            input#phone-number-i.form__input(type='phone-number', placeholder='+1-415-555-0132', required)
+                        .form__group.right
+                            button.btn.btn--small.btn--green.btn--send-2fa Send Message
