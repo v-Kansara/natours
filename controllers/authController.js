@@ -54,18 +54,32 @@ exports.signup = catchAsync(async (req, res, next) => {
     role: req.body.role,
   });
 
+  const url = `${req.protocol}://${req.get('host')}/me`;
+  console.log(url);
+  await new Email(newUser, url).sendWelcome();
+
+  createSendToken(newUser, 200, res);
+});
+
+exports.confirmSignup = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  // 1) Check if email and password exist
+  if (!user) {
+    return next(new AppError('Please provide email!', 400));
+  }
   // eslint-disable-next-line arrow-body-style
-  const confirmToken = confirmSignToken(newUser._id);
+  const confirmToken = confirmSignToken(user._id);
 
   //Send email to client
   const url = `${req.protocol}://${req.get(
     'host'
-  )}/api/v1/users/signup/${confirmToken}`;
+  )}/receive-confirm-signup/${confirmToken}`;
 
   // const message = `You must complete the registration process by following the link below: \n ${URL}.`;
 
   try {
-    await new Email(newUser, url).sendConfirmSignup();
+    await new Email(user, url).sendConfirmSignup();
 
     // ({
     //   email: newUser.email,
@@ -88,7 +102,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.confirmSignup = catchAsync(async (req, res, next) => {
+exports.receiveConfirmSignup = catchAsync(async (req, res, next) => {
   const { token } = req.params;
 
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
@@ -100,15 +114,13 @@ exports.confirmSignup = catchAsync(async (req, res, next) => {
       new AppError('The user belonging to this token does not exist.', 401)
     );
   }
+
   if (user.validated) {
     return next(new AppError('This account has already been validated', 400));
   }
+
   user.validated = true;
   await user.save({ validateBeforeSave: false });
-
-  const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(url);
-  await new Email(user, url).sendWelcome();
 
   createSendToken(user, 200, res);
 });
@@ -128,17 +140,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password', 401));
   }
 
-  // 3) Check if user is verified
-  // if (user.validated !== true) {
-  //   return next(
-  //     new AppError(
-  //       'Account verification pending. Please verify your email!',
-  //       401
-  //     )
-  //   );
-  // }
-
-  // 4) If everything ok, send token to client
+  // 3) If everything ok, send token to client
   createSendToken(user, 200, res);
 });
 
@@ -321,3 +323,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 4) Log user in, send JWT
   createSendToken(user, 200, res);
 });
+
+exports.restrictReview = catchAsync(async (req, res, next) => {});

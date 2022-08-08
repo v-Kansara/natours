@@ -42,6 +42,30 @@ exports.getTour = catchAsync(async (req, res, next) => {
     });
 });
 
+exports.getSignupForm = (req, res) => {
+  res
+    .status(200)
+    // .set(
+    //   'Content-Security-Policy',
+    //   "connect-src 'self' https://cdnjs.cloudflare.com"
+    // )
+    .render('signup', {
+      title: 'Create Your Account!',
+    });
+};
+
+exports.getConfirmSignup = (req, res) => {
+  res
+    .status(200)
+    // .set(
+    //   'Content-Security-Policy',
+    //   "connect-src 'self' https://cdnjs.cloudflare.com"
+    // )
+    .render('receiveConfirmSignup', {
+      title: 'Account Verified!',
+    });
+};
+
 exports.getLoginForm = (req, res) => {
   res
     .status(200)
@@ -54,8 +78,14 @@ exports.getLoginForm = (req, res) => {
     });
 };
 
-exports.getAccount = (req, res) => {
-  res.status(200).render('account', {
+exports.getAccountMain = (req, res) => {
+  res.status(200).render('accountMain', {
+    title: 'Your Account',
+  });
+};
+
+exports.getAccountAuth = (req, res) => {
+  res.status(200).render('accountAuth', {
     title: 'Your Account',
   });
 };
@@ -87,7 +117,7 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
     }
   );
 
-  res.status(200).render('account', {
+  res.status(200).render('accountMain', {
     title: 'Your Account',
     user: updatedUser,
   });
