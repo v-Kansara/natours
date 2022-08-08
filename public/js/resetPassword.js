@@ -38,7 +38,7 @@ const resetPassword = async (data) => {
     const token = windowUrl[2];
     const res = await axios({
       method: 'PATCH',
-      url: `http://127.0.0.1:3000/api/v1/users/resetPassword/${token}`,
+      url: `/api/v1/users/resetPassword/${token}`,
       data,
     });
 
@@ -49,7 +49,6 @@ const resetPassword = async (data) => {
       }, 1000);
     }
   } catch (err) {
-    console.log(err);
     showAlert('error', err.response.data.message);
   }
 };

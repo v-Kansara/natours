@@ -55,7 +55,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
 
   const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(url);
+  // console.log(url);
   await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 200, res);
@@ -92,7 +92,7 @@ exports.confirmSignup = catchAsync(async (req, res, next) => {
       message: 'Token sent by email',
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return next(
       new AppError(
         'There was an error sending an email, try sending later',
@@ -248,7 +248,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError('There is no user with that email address.', 404));
   }
-  console.log(user);
+  // console.log(user);
 
   // 2) Generate random reset token
   const resetToken = user.createPasswordResetToken();
