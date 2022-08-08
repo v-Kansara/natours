@@ -7,11 +7,11 @@ const hideAlert = () => {
 };
 
 // Type is either 'success' or 'error'
-const showAlert = (type, msg) => {
+const showAlert = (type, msg, time = 7) => {
   hideAlert();
   const markup = `<div class="alert alert--${type}">${msg}</div>`;
   document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
-  window.setTimeout(hideAlert, 5000);
+  window.setTimeout(hideAlert, time * 1000);
 };
 
 // Login trigger
@@ -72,3 +72,6 @@ const logout = async () => {
 // Logout trigger
 const logOutBtn = document.querySelector('.nav__el--logout');
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
+
+const alertMessage = document.querySelector('body').dataset.alert;
+if (alert) showAlert('success', alertMessage, 20);

@@ -7,11 +7,11 @@ const hideAlert = () => {
 };
 
 // Type is either 'success' or 'error'
-const showAlert = (type, msg) => {
+const showAlert = (type, msg, time = 7) => {
   hideAlert();
   const markup = `<div class="alert alert--${type}">${msg}</div>`;
   document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
-  window.setTimeout(hideAlert, 5000);
+  window.setTimeout(hideAlert, time * 1000);
 };
 
 // Confirm Sign Up trigger
@@ -49,3 +49,6 @@ const receiveConfirmSignup = async (token) => {
     showAlert('error', err.response.data.message);
   }
 };
+
+const alertMessage = document.querySelector('body').dataset.alert;
+if (alert) showAlert('success', alertMessage, 20);
