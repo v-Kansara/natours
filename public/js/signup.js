@@ -54,4 +54,4 @@ const signup = async (name, email, password, passwordConfirm) => {
 };
 
 const alertMessage = document.querySelector('body').dataset.alert;
-if (alert) showAlert('success', alertMessage, 20);
+if (alertMessage) showAlert('success', alertMessage, 20);
